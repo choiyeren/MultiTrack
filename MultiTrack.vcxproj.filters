@@ -18,11 +18,8 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="vibe_src">
+    <Filter Include="BackgoundSubtract">
       <UniqueIdentifier>{e1ab624f-acb2-4ef3-ad38-f32909bf8457}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="bsegmModule">
-      <UniqueIdentifier>{ac515970-aae1-4891-a153-dbd9704dfbc2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -44,14 +41,8 @@
     <ClCompile Include="LocalTracker.cpp">
       <Filter>Tracker</Filter>
     </ClCompile>
-    <ClCompile Include="vibe.cpp">
-      <Filter>vibe_src</Filter>
-    </ClCompile>
     <ClCompile Include="BackgroundSubtract.cpp">
-      <Filter>vibe_src</Filter>
-    </ClCompile>
-    <ClCompile Include="bgsegm.cpp">
-      <Filter>bsegmModule</Filter>
+      <Filter>BackgoundSubtract</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,16 +68,7 @@
       <Filter>Tracker</Filter>
     </ClInclude>
     <ClInclude Include="BackgroundSubtract.h">
-      <Filter>vibe_src</Filter>
-    </ClInclude>
-    <ClInclude Include="vibe.hpp">
-      <Filter>vibe_src</Filter>
-    </ClInclude>
-    <ClInclude Include="bgsegm.hpp">
-      <Filter>bsegmModule</Filter>
-    </ClInclude>
-    <ClInclude Include="precomp.hpp">
-      <Filter>bsegmModule</Filter>
+      <Filter>BackgoundSubtract</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

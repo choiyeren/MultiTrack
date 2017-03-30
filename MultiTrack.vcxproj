@@ -114,27 +114,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackgroundSubtract.cpp" />
-    <ClCompile Include="bgsegm.cpp" />
     <ClCompile Include="Ctracker.cpp" />
     <ClCompile Include="Detector.cpp" />
     <ClCompile Include="HungarianAlg.cpp" />
     <ClCompile Include="Kalman.cpp" />
     <ClCompile Include="LocalTracker.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="vibe.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackgroundSubtract.h" />
-    <ClInclude Include="bgsegm.hpp" />
     <ClInclude Include="Ctracker.h" />
     <ClInclude Include="defines.h" />
     <ClInclude Include="Detector.h" />
     <ClInclude Include="HungarianAlg.h" />
     <ClInclude Include="Kalman.h" />
     <ClInclude Include="LocalTracker.h" />
-    <ClInclude Include="precomp.hpp" />
     <ClInclude Include="track.h" />
-    <ClInclude Include="vibe.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assignment_2011_07_05.zip" />

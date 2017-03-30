@@ -4,11 +4,17 @@
 #include <vector>
 #include "defines.h"
 
-// ---------------------------------------------------------------------------
-//
-// ---------------------------------------------------------------------------
 class CDetector
 {
+public:
+	CDetector(bool collectPoints, cv::Mat& gray);
+	~CDetector(void);
+	
+	void SetMinObjectSize(cv::Size minObjectSize);
+
+	const std::vector<Point_t>& Detect(cv::Mat& gray);
+	const regions_t& GetDetects() const;
+
 private:
 	void DetectContour();
 
@@ -16,17 +22,6 @@ private:
 	regions_t m_regions;
 	std::vector<Point_t> m_centers;
 	cv::Mat m_fg;
-
 	cv::Size m_minObjectSize;
-
 	bool m_collectPoints;
-		
-public:
-	CDetector(BackgroundSubtract::BGFG_ALGS algType, bool collectPoints, cv::Mat& gray);
-	const std::vector<Point_t>& Detect(cv::Mat& gray);
-	~CDetector(void);
-
-	void SetMinObjectSize(cv::Size minObjectSize);
-
-	const regions_t& GetDetects() const;
 };

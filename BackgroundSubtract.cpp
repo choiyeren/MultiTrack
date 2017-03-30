@@ -1,7 +1,6 @@
 #include "BackgroundSubtract.h"
 
 BackgroundSubtract::BackgroundSubtract(
-	BGFG_ALGS algType,
 	int channels,
 	int samples,
 	int pixel_neighbor,
@@ -10,20 +9,8 @@ BackgroundSubtract::BackgroundSubtract(
 	int update_factor
 	)
 	:
-	m_channels(channels),
-	m_algType(algType)
+	m_channels(channels)
 {
-	switch (m_algType)
-	{
-	case VIBE_ALG:
-		m_modelVibe = std::make_unique<vibe::VIBE>(m_channels, samples, pixel_neighbor, distance_threshold, matching_threshold, update_factor);
-		break;
-
-	case MOG_ALG:
-		m_modelOCV = cv::bgsegm::createBackgroundSubtractorMOG(115, 7, 0.01, 0); 
-		break;
-
-	}
 }
 
 void BackgroundSubtract::subtract(const cv::Mat& image, cv::Mat& foreground)
@@ -48,23 +35,15 @@ void BackgroundSubtract::subtract(const cv::Mat& image, cv::Mat& foreground)
 		return image;
 	};
 
-	switch (m_algType)
-	{
-	case VIBE_ALG:
-		m_modelVibe->update(GetImg());
-		foreground = m_modelVibe->getMask();
-		break;
-
-	case MOG_ALG:
-		m_modelOCV->apply(GetImg(), foreground);
-		break;
-	}
-	
 	cv::imshow("before", foreground);
-	cv::GaussianBlur(foreground, foreground, cv::Size(21, 21), 0);
+	cv::GaussianBlur(foreground, foreground, cv::Size(5, 5), 0);
 
-	cv::Mat dilateElement = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(7, 7), cv::Point(-1, -1));
-	cv::dilate(foreground, foreground, dilateElement, cv::Point(-1, -1), 1);	
-
+	//cv::Mat dilateElement = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(7,7), cv::Point(-1, -1));
+	cv::Mat structuringElement3x3 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3));
+	cv::Mat structuringElement5x5 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5));
+	cv::Mat structuringElement7x7 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(7, 7));
+	cv::Mat structuringElement15x15 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(15, 15));
+	//cv::dilate(foreground, foreground, dilateElement, cv::Point(-1, -1), 1);	
+	cv::erode(foreground, foreground, structuringElement15x15, cv::Point(-1, -1), 1);
 	cv::imshow("after", foreground);
 }
