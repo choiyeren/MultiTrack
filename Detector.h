@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "defines.h"
+#include <memory>
 
 class CDetector
 {
@@ -16,12 +17,12 @@ public:
 	const regions_t& GetDetects() const;
 
 private:
-	void DetectContour();
+		void DetectContour();
 
-	std::unique_ptr<BackgroundSubtract> m_backgroundSubst;
+		std::unique_ptr<BackgroundSubtract> m_backgroundSubst;
 	regions_t m_regions;
-	std::vector<Point_t> m_centers;
-	cv::Mat m_fg;
-	cv::Size m_minObjectSize;
-	bool m_collectPoints;
+		std::vector<Point_t> m_centers;
+		cv::Mat m_fg;
+		cv::Size m_minObjectSize;
+		bool m_collectPoints;
 };

@@ -8,11 +8,11 @@
 
  #define ExampleNum 1
 
-int main(int argc, char** argv)
+int main()//int argc, char** argv
 {
 	//video name
     std::string inFile("output.avi");
-	std::string outFile = argv[2];
+	//std::string outFile = argv[2];
     /*if (argc > 1)
 	{
 		inFile = argv[1];
@@ -50,7 +50,7 @@ int main(int argc, char** argv)
 
 	// initialize tracker (useLocalTracking, dt(Шаг времени опроса фильтра), 
 	// Accel noise mag, dist thres, maximum allowed skipped frames, max trace length)
-    CTracker tracker(useLocalTracking, 0.2f, 0.1f, 60.0f, 10, 50);
+    CTracker tracker(useLocalTracking, 0.02f, 0.1f, 300.0f, 20, 200);
 	
 	// take one frame from stream
 	capture >> frame;
@@ -67,7 +67,7 @@ int main(int argc, char** argv)
 
 	// seting minimum size of object to be detected relative our frame size
 	// not in while loop cause it needed just once
-	detector.SetMinObjectSize(cv::Size(gray.cols /7, gray.rows /5));
+	detector.SetMinObjectSize(cv::Size(gray.cols /6, gray.rows /4));
 	
 	//?????????????????? lol wut 
 	int k = 0;
@@ -97,13 +97,12 @@ int main(int argc, char** argv)
 		cv::resize(frame, frame, cv::Size(390, 300));
 		cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
 
-		if (!writer.isOpened())
+		/*if (!writer.isOpened())
 		{
 			writer.open(outFile, cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), capture.get(cv::CAP_PROP_FPS), frame.size(), true);
-		}
+		}*/
 		// number of clock-cycles after a reference event (like the moment machine was switched ON) to the moment this function is called
 		int64 t1 = cv::getTickCount();
-
 		const std::vector<Point_t> & centers = detector.Detect(gray);
         const regions_t & regions = detector.GetDetects();
 
