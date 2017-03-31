@@ -70,6 +70,7 @@
     <ClInclude Include="BackgroundSubtract.h">
       <Filter>BackgoundSubtract</Filter>
     </ClInclude>
+    <ClInclude Include="Tuner.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vs_garbage_del.bat">

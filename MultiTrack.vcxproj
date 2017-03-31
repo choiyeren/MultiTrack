@@ -130,6 +130,7 @@
     <ClInclude Include="Kalman.h" />
     <ClInclude Include="LocalTracker.h" />
     <ClInclude Include="track.h" />
+    <ClInclude Include="Tuner.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assignment_2011_07_05.zip" />
