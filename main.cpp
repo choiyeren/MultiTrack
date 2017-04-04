@@ -7,26 +7,46 @@
 #include <iostream>
 #include <vector>
 #include "Tuner.h"
+#include "opencv2/imgcodecs/imgcodecs.hpp"
+#include "opencv2/videoio/videoio.hpp"
 
  #define ExampleNum 1
 
-int main(int argc, char** argv)//
+int main()//int argc, char** argv
 {
 	//video name
-    std::string inFile("output.avi");
-	
-	std::string outFile("outVideo.avi");
-	if (argc > 1)
+    std::string inFile("bungee.mp4");
+	//std::string outFile("bungeeOut.mp4");
+	int X;
+	int Y;
+	int width;
+	int height;
+
+	/*if (argc > 1)
 	{
 		inFile = argv[1];
 	}
-
-	if (argc > 2)
+	*/
+	
+/*if (argc > 7)
 	{
-		outFile = argv[2];
+		outFile = argv[6];
 	}
+	if (argc > 6)
+	{
+		X = (int)argv[2];
+		Y = (int)argv[3];
+		width = (int)argv[4];
+		height = (int)argv[5];
+	}*/
+	X = 160;
+	Y = 0;
+	width = 200;
+	height = 160;
 
 	cv::VideoWriter writer;
+	
+	int fourcc = cv::VideoWriter::fourcc('M', 'P', '4', '2');
 
 #if ExampleNum
 	//array with colors
@@ -57,11 +77,13 @@ int main(int argc, char** argv)//
 	// take one frame from stream
 	capture >> frame;
 	
+	cv::Mat croppedImage = frame(cv::Rect(X, Y, width, height));
+
 	//make small windows to see many simulteneously and reduce computing(really??)
-	cv::resize(frame, frame, cv::Size(390, 300));
+	cv::resize(croppedImage, croppedImage, cv::Size(390, 300));
 	
 	//change color space from RGB usually to gray to reduce computing ( how to work with RGB??, is the information loss/computation tradeoff)
-	cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
+	cv::cvtColor(croppedImage, gray, cv::COLOR_BGR2GRAY);
 
 	// initialize detecor object (collect points? ~ useLocalTrackin, our changed to gray frame)
 	// not in while loop cause it needed just once
@@ -86,23 +108,25 @@ int main(int argc, char** argv)//
 	// stackoverflow magic number
 	while (k != 27)
 	{
-		// get same frame one more time
+		// get next frame from a videofile
 		capture >> frame;
 		
-		if (frame.empty())
+		cv::Mat croppedImage = frame(cv::Rect(X, Y, width, height));
+		
+		if (croppedImage.empty())
 		{
 			//capture.set(cv::CAP_PROP_POS_FRAMES, 0);
 			//continue;
 			break;
 		}
 		// resize and make gray
-		cv::resize(frame, frame, cv::Size(390, 300));
-		cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
-
-		if (!writer.isOpened())
+		cv::resize(croppedImage, croppedImage, cv::Size(390, 300));
+		cv::cvtColor(croppedImage, gray, cv::COLOR_BGR2GRAY);
+		/*if (!writer.isOpened())
 		{
-			writer.open(outFile, cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), capture.get(cv::CAP_PROP_FPS), frame.size(), true);
+			writer.open(outFile, capture.get(cv::CAP_PROP_FOURCC), capture.get(cv::CAP_PROP_FPS), croppedImage.size(), true);
 		}
+		*/
 		// number of clock-cycles after a reference event (like the moment machine was switched ON) to the moment this function is called
 		int64 t1 = cv::getTickCount();
 		const std::vector<Point_t> & centers = detector.Detect(gray);
@@ -119,7 +143,7 @@ int main(int argc, char** argv)//
 		// draw object centers
 		for (auto p : centers)
 		{
-			cv::circle(frame, p, 3, cv::Scalar(0, 255, 0), 1, CV_AA);
+			cv::circle(croppedImage, p, 3, cv::Scalar(0, 255, 0), 1, CV_AA);
 		}
 		// prints out how much tracks we have on each frame
 		std::cout << tracker.tracks.size() << std::endl;
@@ -127,18 +151,18 @@ int main(int argc, char** argv)//
 		// draw bounding boxes and traces 
         for (size_t i = 0; i < tracker.tracks.size(); i++)
 		{
-			cv::rectangle(frame, tracker.tracks[i]->GetLastRect(), cv::Scalar(0, 255, 0), 1, CV_AA);
+			cv::rectangle(croppedImage, tracker.tracks[i]->GetLastRect(), cv::Scalar(0, 255, 0), 1, CV_AA);
 
 			if (tracker.tracks[i]->trace.size() > 1)
 			{
 				for (size_t j = 0; j < tracker.tracks[i]->trace.size() - 1; j++)
 				{
-					cv::line(frame, tracker.tracks[i]->trace[j], tracker.tracks[i]->trace[j + 1], Colors[tracker.tracks[i]->track_id % 9], 2, CV_AA);
+					cv::line(croppedImage, tracker.tracks[i]->trace[j], tracker.tracks[i]->trace[j + 1], Colors[tracker.tracks[i]->track_id % 9], 2, CV_AA);
 				}
 			}	
 		}
 		// show modified frame
-		cv::imshow("Video", frame);
+		cv::imshow("Video", croppedImage);
 
         int waitTime = manualMode ? 0 : 20;
         k = cv::waitKey(waitTime);

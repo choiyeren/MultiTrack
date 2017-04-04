@@ -42,20 +42,12 @@ void CDetector::DetectContour()
 	std::vector<cv::Vec4i> hierarchy;
 
 	cv::findContours(m_fg, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, cv::Point());
-	//_____________________________________________________________________________________________________
-	std::vector<std::vector<cv::Point> > convexHulls(contours.size());
-
-	for (unsigned int i = 0; i < contours.size(); i++) {
-		cv::convexHull(contours[i], convexHulls[i]);
-	}
 	
-	drawAndShowContours(m_fg.size(), convexHulls, "imgConvexHulls");
-	//______________________________________________________________________________________________________
 	if (contours.size() > 0)
 	{
 		for (size_t i = 0; i < contours.size(); i++)
 		{
-			cv::Rect r = cv::boundingRect(convexHulls[i]);
+			cv::Rect r = cv::boundingRect(contours[i]);
 
 			if (r.width >= m_minObjectSize.width &&
 				r.height >= m_minObjectSize.height)

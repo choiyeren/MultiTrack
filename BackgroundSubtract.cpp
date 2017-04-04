@@ -63,7 +63,7 @@ void BackgroundSubtract::subtract(const cv::Mat& image, cv::Mat& foreground)
 	cv::Mat structuringElement15x15 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(15, 15));
 
 	for (unsigned int i = 0; i < 2; i++) {
-		cv::dilate(imgThresh, imgThresh, structuringElement5x5);
+		cv::dilate(imgThresh, imgThresh, structuringElement7x7);
 		cv::dilate(imgThresh, imgThresh, structuringElement7x7);
 		cv::erode(imgThresh, imgThresh, structuringElement3x3);
 	}
