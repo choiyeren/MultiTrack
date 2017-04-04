@@ -1,4 +1,5 @@
 #include "BackgroundSubtract.h"
+#include "Tuner.h"
 
 BackgroundSubtract::BackgroundSubtract(
 	int channels,
@@ -51,11 +52,11 @@ void BackgroundSubtract::subtract(const cv::Mat& image, cv::Mat& foreground)
 	cv::Mat imgDifference;
 	cv::Mat imgThresh;
 	
-	cv::GaussianBlur(imgFrame1Copy, imgFrame1Copy, cv::Size(5, 5), 0);
-	cv::GaussianBlur(imgFrame2Copy, imgFrame2Copy, cv::Size(5, 5), 0);
+	cv::GaussianBlur(imgFrame1Copy, imgFrame1Copy, cv::Size(7, 7), 0);
+	cv::GaussianBlur(imgFrame2Copy, imgFrame2Copy, cv::Size(7, 7), 0);
 	cv::absdiff(imgFrame1Copy, imgFrame2Copy, imgDifference);
 
-	cv::threshold(imgDifference, imgThresh, 20, 255.0, CV_THRESH_BINARY);
+	cv::threshold(imgDifference, imgThresh, subtractThresh, 255.0, CV_THRESH_BINARY);
 
 	cv::Mat structuringElement3x3 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3));
 	cv::Mat structuringElement5x5 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5));
@@ -63,9 +64,9 @@ void BackgroundSubtract::subtract(const cv::Mat& image, cv::Mat& foreground)
 	cv::Mat structuringElement15x15 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(15, 15));
 
 	for (unsigned int i = 0; i < 2; i++) {
+		cv::dilate(imgThresh, imgThresh, structuringElement3x3);
 		cv::dilate(imgThresh, imgThresh, structuringElement7x7);
-		cv::dilate(imgThresh, imgThresh, structuringElement7x7);
-		cv::erode(imgThresh, imgThresh, structuringElement3x3);
+		cv::erode(imgThresh, imgThresh, structuringElement5x5);
 	}
 
 	cv::imshow("after", imgThresh);

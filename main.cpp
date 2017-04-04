@@ -12,21 +12,21 @@
 
  #define ExampleNum 1
 
-int main()//int argc, char** argv
+int main(int argc, char** argv)//int argc, char** argv
 {
 	//video name
-    std::string inFile("bungee.mp4");
+    std::string inFile("5thFloor.mp4");
 	//std::string outFile("bungeeOut.mp4");
 	int X;
 	int Y;
 	int width;
 	int height;
 
-	/*if (argc > 1)
+	if (argc > 1)
 	{
 		inFile = argv[1];
 	}
-	*/
+	
 	
 /*if (argc > 7)
 	{
@@ -39,10 +39,7 @@ int main()//int argc, char** argv
 		width = (int)argv[4];
 		height = (int)argv[5];
 	}*/
-	X = 160;
-	Y = 0;
-	width = 200;
-	height = 160;
+	
 
 	cv::VideoWriter writer;
 	
@@ -77,10 +74,15 @@ int main()//int argc, char** argv
 	// take one frame from stream
 	capture >> frame;
 	
+	X = 0;
+	Y = 0;
+	width = frame.cols;
+	height = frame.rows;
+
 	cv::Mat croppedImage = frame(cv::Rect(X, Y, width, height));
 
 	//make small windows to see many simulteneously and reduce computing(really??)
-	cv::resize(croppedImage, croppedImage, cv::Size(390, 300));
+	//cv::resize(croppedImage, croppedImage, cv::Size(390, 300));
 	
 	//change color space from RGB usually to gray to reduce computing ( how to work with RGB??, is the information loss/computation tradeoff)
 	cv::cvtColor(croppedImage, gray, cv::COLOR_BGR2GRAY);
@@ -120,7 +122,7 @@ int main()//int argc, char** argv
 			break;
 		}
 		// resize and make gray
-		cv::resize(croppedImage, croppedImage, cv::Size(390, 300));
+		//cv::resize(croppedImage, croppedImage, cv::Size(390, 300));
 		cv::cvtColor(croppedImage, gray, cv::COLOR_BGR2GRAY);
 		/*if (!writer.isOpened())
 		{
