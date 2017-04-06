@@ -12,7 +12,7 @@ static const track_t distThresh		= 200;	   //|
 static const size_t skipFrames =	   10;	   //|
 //_______________________________________________|
 //
-static const size_t	maxTraceLength	= 500;	  //|
+static const size_t	maxTraceLength	= 100;	  //|
 //_______________________________________________|
 //
 static const float minObjectWidth	= 0.05f;   //|
