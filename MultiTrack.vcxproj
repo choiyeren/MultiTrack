@@ -123,6 +123,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackgroundSubtract.cpp" />
+    <ClCompile Include="CameraStreamer.cpp" />
     <ClCompile Include="Ctracker.cpp" />
     <ClCompile Include="Detector.cpp" />
     <ClCompile Include="HungarianAlg.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="Ctracker.h" />
     <ClInclude Include="defines.h" />
     <ClInclude Include="Detector.h" />
+    <ClInclude Include="CameraStreamer.h" />
     <ClInclude Include="HungarianAlg.h" />
     <ClInclude Include="Kalman.h" />
     <ClInclude Include="LocalTracker.h" />

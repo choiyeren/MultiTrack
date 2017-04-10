@@ -44,6 +44,9 @@
     <ClCompile Include="BackgroundSubtract.cpp">
       <Filter>BackgoundSubtract</Filter>
     </ClCompile>
+    <ClCompile Include="CameraStreamer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Detector.h">
@@ -71,6 +74,7 @@
       <Filter>BackgoundSubtract</Filter>
     </ClInclude>
     <ClInclude Include="Tuner.h" />
+    <ClInclude Include="CameraStreamer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vs_garbage_del.bat">
