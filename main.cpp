@@ -40,10 +40,15 @@ int main(int argc, char** argv)//int argc, char** argv
 		height = (int)argv[5];
 	}*/
 	
-
 	cv::VideoWriter writer;
 	
 	int fourcc = cv::VideoWriter::fourcc('M', 'P', '4', '2');
+	
+	//The number of connected camera(s)
+	const uint CAM_NUM = 3;
+
+	//This will hold the VideoCapture objects
+	cv::VideoCapture camCaptures[CAM_NUM];
 
 #if ExampleNum
 	//array with colors
@@ -74,17 +79,17 @@ int main(int argc, char** argv)//int argc, char** argv
 	// take one frame from stream
 	capture >> frame;
 	
-	X = 0;
-	Y = 0;
-	width = frame.cols;
-	height = frame.rows;
+	X = 100;
+	Y =100;
+	width = frame.cols-101;
+	height = frame.rows-101;
 
 	cv::Mat croppedImage = frame(cv::Rect(X, Y, width, height));
 
 	//make small windows to see many simulteneously and reduce computing(really??)
 	//cv::resize(croppedImage, croppedImage, cv::Size(390, 300));
 	
-	//change color space from RGB usually to gray to reduce computing ( how to work with RGB??, is the information loss/computation tradeoff)
+	//change color space from RGB usually to gray to reduce computing ( how to work with RGB??, information loss/computation tradeoff)
 	cv::cvtColor(croppedImage, gray, cv::COLOR_BGR2GRAY);
 
 	// initialize detecor object (collect points? ~ useLocalTrackin, our changed to gray frame)
