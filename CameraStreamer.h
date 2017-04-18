@@ -18,8 +18,6 @@ public:
 	vector<int> camera_index;
 	//this holds OpenCV VideoCapture pointers
 	vector<VideoCapture*> camera_capture;
-	//this holds queue(s) which hold images from each camera
-	vector<concurrent_queue<Mat>*> frame_queue;
 	//this holds thread(s) which run the camera capture process
 	vector<thread*> camera_thread;
 

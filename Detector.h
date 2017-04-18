@@ -8,7 +8,7 @@
 class CDetector
 {
 public:
-	CDetector(bool collectPoints, std::vector<cv::Mat&> grayFrames);
+	CDetector(bool collectPoints, cv::Mat& gray);
 	~CDetector(void);
 	
 	void SetMinObjectSize(std::vector<cv::Size> minObjectSize);
@@ -19,10 +19,11 @@ public:
 private:
 		void DetectContour();
 
-		std::unique_ptr<BackgroundSubtract> m_backgroundSubst;
-	regions_t m_regions;
-		std::vector<Point_t> m_centers;
-		std::vector<cv::Mat> m_fg;
-		std::vector<cv::Size> m_minObjectSize;
 		bool m_collectPoints;
+		regions_t m_regions;
+		std::vector<std::unique_ptr<BackgroundSubtract>> m_backgroundSubsts;
+		std::vector<Point_t> m_centers;
+		std::vector<cv::Mat> m_fgs;
+		std::vector<cv::Size> m_minObjectSizes;
+		
 };

@@ -1,4 +1,6 @@
 #pragma once
+#include "defines.h"
+
 //
 static const track_t kalmanStep		= 0.05;    //|
 //_______________________________________________|

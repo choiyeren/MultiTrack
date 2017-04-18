@@ -1,27 +1,27 @@
 #include "Detector.h"
 #include <memory>
 
-CDetector::CDetector(bool collectPoints, std::vector<cv::Mat&> grayFrames)
+CDetector::CDetector(bool collectPoints, cv::Mat& gray)
 	: m_collectPoints(collectPoints) {
 	
-	for (int i = 0; i < grayFrames.size(); i++)
-	{
 		cv::Mat gray;
-		gray = grayFrames[i].clone();
-		m_fg[i] = gray;
+		m_fgs.push_back(gray.clone());
 		// create background subtruct
-		m_backgroundSubst = std::make_unique<BackgroundSubtract>(gray.channels());
+		m_backgroundSubsts.push_back(std::make_unique<BackgroundSubtract>(gray.channels()));
+		int minObjectWidth = std::max(5, gray.cols / 100);
+		int minObjectHeight = minObjectWidth;
+		m_minObjectSizes.push_back(cv::Size(minObjectWidth, minObjectHeight));
+}
 
-		m_minObjectSize[i].width = std::max(5, gray.cols / 100);
-		m_minObjectSize[i].height = m_minObjectSize[i].width;
- 	}
+CDetector::~CDetector(void)
+{
 }
 
 void CDetector::SetMinObjectSize(std::vector<cv::Size> minObjectSize)
 {
 	for (int i = 0; i < minObjectSize.size(); i++)
 	{
-		m_minObjectSize[i] = minObjectSize[i];
+		m_minObjectSizes[i] = minObjectSize[i];
 	}
 }
 
@@ -46,7 +46,7 @@ void CDetector::DetectContour()
 	std::vector<std::vector<cv::Point> > contours;
 	std::vector<cv::Vec4i> hierarchy;
 
-	cv::findContours(m_fg, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, cv::Point());
+	cv::findContours(m_fgs, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, cv::Point());
 	
 	if (contours.size() > 0)
 	{
@@ -54,7 +54,7 @@ void CDetector::DetectContour()
 		{
 			cv::Rect r = cv::boundingRect(contours[i]);
 
-			if (r.width >= m_minObjectSize.width &&
+			if (r.width >= m_minObjectSizes.width &&
 				r.height >= m_minObjectSize.height)
 			{
 				CRegion region(r);
@@ -91,7 +91,7 @@ void CDetector::DetectContour()
 }
 const std::vector<Point_t>& CDetector::Detect(cv::Mat& gray)
 {
-	m_backgroundSubst->subtract(gray, m_fg);
+	m_backgroundSubsts->subtract(gray, m_fgs);
 	DetectContour();
 	return m_centers;
 }
