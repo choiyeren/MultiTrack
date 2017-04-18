@@ -8,10 +8,10 @@
 class CDetector
 {
 public:
-	CDetector(bool collectPoints, cv::Mat& gray);
+	CDetector(bool collectPoints, std::vector<cv::Mat&> grayFrames);
 	~CDetector(void);
 	
-	void SetMinObjectSize(cv::Size minObjectSize);
+	void SetMinObjectSize(std::vector<cv::Size> minObjectSize);
 
 	const std::vector<Point_t>& Detect(cv::Mat& gray);
 	const regions_t& GetDetects() const;
@@ -22,7 +22,7 @@ private:
 		std::unique_ptr<BackgroundSubtract> m_backgroundSubst;
 	regions_t m_regions;
 		std::vector<Point_t> m_centers;
-		cv::Mat m_fg;
-		cv::Size m_minObjectSize;
+		std::vector<cv::Mat> m_fg;
+		std::vector<cv::Size> m_minObjectSize;
 		bool m_collectPoints;
 };

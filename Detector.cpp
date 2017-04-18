@@ -1,23 +1,28 @@
 #include "Detector.h"
 #include <memory>
 
-CDetector::CDetector(bool collectPoints, cv::Mat& gray)
+CDetector::CDetector(bool collectPoints, std::vector<cv::Mat&> grayFrames)
 	: m_collectPoints(collectPoints) {
-	m_fg = gray.clone();
-	// create background subtruct
-	m_backgroundSubst = std::make_unique<BackgroundSubtract>(gray.channels());
+	
+	for (int i = 0; i < grayFrames.size(); i++)
+	{
+		cv::Mat gray;
+		gray = grayFrames[i].clone();
+		m_fg[i] = gray;
+		// create background subtruct
+		m_backgroundSubst = std::make_unique<BackgroundSubtract>(gray.channels());
 
-	m_minObjectSize.width = std::max(5, gray.cols / 100);
-	m_minObjectSize.height = m_minObjectSize.width;
+		m_minObjectSize[i].width = std::max(5, gray.cols / 100);
+		m_minObjectSize[i].height = m_minObjectSize[i].width;
+ 	}
 }
 
-CDetector::~CDetector(void)
+void CDetector::SetMinObjectSize(std::vector<cv::Size> minObjectSize)
 {
-}
-
-void CDetector::SetMinObjectSize(cv::Size minObjectSize)
-{
-	m_minObjectSize = minObjectSize;
+	for (int i = 0; i < minObjectSize.size(); i++)
+	{
+		m_minObjectSize[i] = minObjectSize[i];
+	}
 }
 
 // global variables 
