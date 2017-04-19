@@ -144,12 +144,7 @@
     <ClInclude Include="Tuner.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="assignment_2011_07_05.zip" />
-    <None Include="atrium.avi" />
     <None Include="vs_garbage_del.bat" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="TrackingBugs.mp4" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

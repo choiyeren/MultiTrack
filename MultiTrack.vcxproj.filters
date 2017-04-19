@@ -1,95 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Detector">
-      <UniqueIdentifier>{34adc453-e730-4c73-a49a-d57d1924191f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HungarianAlg">
-      <UniqueIdentifier>{bf514280-fdee-49f1-a546-531c2f7f3b1f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tracker">
-      <UniqueIdentifier>{f50a616a-65a1-4d5e-a16d-65bb048c5897}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="data">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="BackgoundSubtract">
-      <UniqueIdentifier>{e1ab624f-acb2-4ef3-ad38-f32909bf8457}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="BackgroundSubtract.cpp" />
+    <ClCompile Include="CameraStreamer.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Ctracker.cpp" />
+    <ClCompile Include="Kalman.cpp" />
+    <ClCompile Include="LocalTracker.cpp" />
+    <ClCompile Include="HungarianAlg.cpp" />
+    <ClCompile Include="Detector.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Detector.cpp">
-      <Filter>Detector</Filter>
-    </ClCompile>
-    <ClCompile Include="HungarianAlg.cpp">
-      <Filter>HungarianAlg</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Ctracker.cpp">
-      <Filter>Tracker</Filter>
-    </ClCompile>
-    <ClCompile Include="Kalman.cpp">
-      <Filter>Tracker</Filter>
-    </ClCompile>
-    <ClCompile Include="LocalTracker.cpp">
-      <Filter>Tracker</Filter>
-    </ClCompile>
-    <ClCompile Include="BackgroundSubtract.cpp">
-      <Filter>BackgoundSubtract</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraStreamer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Detector.h">
-      <Filter>Detector</Filter>
-    </ClInclude>
-    <ClInclude Include="HungarianAlg.h">
-      <Filter>HungarianAlg</Filter>
-    </ClInclude>
-    <ClInclude Include="Ctracker.h">
-      <Filter>Tracker</Filter>
-    </ClInclude>
-    <ClInclude Include="Kalman.h">
-      <Filter>Tracker</Filter>
-    </ClInclude>
-    <ClInclude Include="LocalTracker.h">
-      <Filter>Tracker</Filter>
-    </ClInclude>
-    <ClInclude Include="track.h">
-      <Filter>Tracker</Filter>
-    </ClInclude>
-    <ClInclude Include="defines.h">
-      <Filter>Tracker</Filter>
-    </ClInclude>
-    <ClInclude Include="BackgroundSubtract.h">
-      <Filter>BackgoundSubtract</Filter>
-    </ClInclude>
     <ClInclude Include="Tuner.h" />
     <ClInclude Include="CameraStreamer.h" />
+    <ClInclude Include="BackgroundSubtract.h" />
+    <ClInclude Include="Ctracker.h" />
+    <ClInclude Include="defines.h" />
+    <ClInclude Include="Kalman.h" />
+    <ClInclude Include="LocalTracker.h" />
+    <ClInclude Include="track.h" />
+    <ClInclude Include="HungarianAlg.h" />
+    <ClInclude Include="Detector.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="vs_garbage_del.bat">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="assignment_2011_07_05.zip">
-      <Filter>HungarianAlg</Filter>
-    </None>
-    <None Include="atrium.avi">
-      <Filter>data</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="TrackingBugs.mp4">
-      <Filter>data</Filter>
-    </Media>
+    <None Include="vs_garbage_del.bat" />
   </ItemGroup>
 </Project>

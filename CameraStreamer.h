@@ -14,12 +14,11 @@ class CameraStreamer {
 public:
 	//this holds camera stream urls
 	vector<string> camera_source;
-	//this holds usb camera indices
-	vector<int> camera_index;
 	//this holds OpenCV VideoCapture pointers
 	vector<VideoCapture*> camera_capture;
 	//this holds thread(s) which run the camera capture process
 	vector<thread*> camera_thread;
+	concurrent_queue<Mat> frame_queue;
 
 	//Constructor for IP Camera capture
 	CameraStreamer(vector<string> source);

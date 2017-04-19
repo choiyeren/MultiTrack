@@ -14,7 +14,7 @@ BackgroundSubtract::BackgroundSubtract(
 {
 }
 
-void BackgroundSubtract::subtract(const cv::Mat& image, std::vector<cv::Mat>& foreground)
+void BackgroundSubtract::subtract(const cv::Mat & image, cv::Mat & foreground)
 {
 	auto GetImg = [&]() -> cv::Mat
 	{

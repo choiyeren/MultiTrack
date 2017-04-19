@@ -1,13 +1,11 @@
 #include "Detector.h"
 #include <memory>
 
-CDetector::CDetector(bool collectPoints, cv::Mat& gray)
+CDetector::CDetector(bool collectPoints, cv::Mat & gray)
 	: m_collectPoints(collectPoints) {
-	
-		cv::Mat gray;
+
 		m_fgs.push_back(gray.clone());
-		// create background subtruct
-		m_backgroundSubsts.push_back(std::make_unique<BackgroundSubtract>(gray.channels()));
+		//standard values
 		int minObjectWidth = std::max(5, gray.cols / 100);
 		int minObjectHeight = minObjectWidth;
 		m_minObjectSizes.push_back(cv::Size(minObjectWidth, minObjectHeight));
@@ -17,12 +15,9 @@ CDetector::~CDetector(void)
 {
 }
 
-void CDetector::SetMinObjectSize(std::vector<cv::Size> minObjectSize)
+void CDetector::SetMinObjectSize(cv::Size minObjectSize, int index)
 {
-	for (int i = 0; i < minObjectSize.size(); i++)
-	{
-		m_minObjectSizes[i] = minObjectSize[i];
-	}
+		m_minObjectSizes[index] = minObjectSize;
 }
 
 // global variables 
@@ -39,14 +34,14 @@ void drawAndShowContours(cv::Size imageSize, std::vector<std::vector<cv::Point> 
 
 	cv::imshow(strImageName, image);
 }
-void CDetector::DetectContour()
+void CDetector::DetectContour(int index)
 {
 	m_regions.clear();
 	m_centers.clear();
 	std::vector<std::vector<cv::Point> > contours;
 	std::vector<cv::Vec4i> hierarchy;
 
-	cv::findContours(m_fgs, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, cv::Point());
+	cv::findContours(m_fgs[index], contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, cv::Point());
 	
 	if (contours.size() > 0)
 	{
@@ -54,8 +49,8 @@ void CDetector::DetectContour()
 		{
 			cv::Rect r = cv::boundingRect(contours[i]);
 
-			if (r.width >= m_minObjectSizes.width &&
-				r.height >= m_minObjectSize.height)
+			if (r.width >= m_minObjectSizes[index].width &&
+				r.height >= m_minObjectSizes[index].height)
 			{
 				CRegion region(r);
 				cv::Point2f center(r.x + 0.5f * r.width, r.y + 0.5f * r.height);
@@ -89,10 +84,10 @@ void CDetector::DetectContour()
 		}
 	}
 }
-const std::vector<Point_t>& CDetector::Detect(cv::Mat& gray)
+const std::vector<Point_t>& CDetector::Detect(cv::Mat& gray, int index)
 {
-	m_backgroundSubsts->subtract(gray, m_fgs);
-	DetectContour();
+	m_backgroundSubt->subtract(gray, m_fgs[index]);
+	DetectContour(index);
 	return m_centers;
 }
 
